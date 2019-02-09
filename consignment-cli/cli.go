@@ -2,12 +2,12 @@ package main
 
 import (
 	"log"
-	pb "github.com/xmarlem/shippy/consignment-service/proto/consignment"
+	pb "github.com/xmarlem/shippy-proto/proto/consignment"
 	"io/ioutil"
 	"encoding/json"
 	"os"
 	"context"
-	"github.com/micro/micro/cmd"
+	"github.com/micro/go-micro/cmd"
 	microclient "github.com/micro/go-micro/client"
 )
 

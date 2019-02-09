@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "github.com/xmarlem/shippy/consignment-service/proto/consignment"
+	pb "github.com/xmarlem/shippy-proto/proto/consignment"
 	"context"
 	"log"
 	micro "github.com/micro/go-micro"

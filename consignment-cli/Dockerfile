@@ -4,20 +4,19 @@ WORKDIR /go/src/github.com/xmarlem/shippy/consignment-cli
 
 COPY . .
 
-RUN go get -d -v ./...
+RUN go get -u github.com/golang/dep/cmd/dep
+RUN dep init && dep ensure
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/consignment-cli .
 
-######## Start a new stage from scratch #######
 FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /root/
-
+RUN mkdir /app
+WORKDIR /app
 COPY consignment.json /app/consignment.json
+COPY --from=builder /go/src/github.com/xmarlem/shippy/consignment-cli/consignment-cli .
 
-COPY --from=builder /go/bin/consignment-cli .
-
-
+ENTRYPOINT ["./consignment-cli", "consignment.json"]
 CMD ["./consignment-cli"]
